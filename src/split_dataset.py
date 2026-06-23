@@ -33,12 +33,6 @@ for path, label in samples:
 
 train, val, test = [], [], []
 for label, paths in samples_by_class.items():
-    print(f"Total gambar yang siap dibagi: {len(paths)}")
-    
-    if len(paths) < 10:
-        print(f"Melewati folder ini karena jumlah data terlalu sedikit (< 10 gambar).")
-        continue
-    
     tr, temp = train_test_split(paths, test_size=1-train_ratio, random_state=42, stratify=None)
     relative_test = test_ratio / (val_ratio + test_ratio)
     v, te = train_test_split(temp, test_size=relative_test, random_state=42)

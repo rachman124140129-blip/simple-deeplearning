@@ -1,7 +1,12 @@
+Lib/
+Scripts/
+Include/
+pyvenv.cfg
+
+data/
+
+models/
+
+outputs/
 __pycache__/
 *.pyc
-.env
-data/raw_frames/*
-data/faces/*
-models/*
-notebooks/.ipynb_checkpoints/
