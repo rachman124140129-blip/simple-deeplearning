@@ -3,12 +3,21 @@ Proyek deep learning untuk mengidentifikasi wajah karakter dari anime "86: Eight
 
 ## Status
 - [x] Inisialisasi repository
-- [ ] Deteksi wajah anime
-- [ ] Koleksi dataset
-- [ ] Training classifier
-- [ ] Pipeline inferensi
+- [x] Deteksi wajah anime
+- [x] Koleksi dataset
+- [x] Training classifier
+- [x] Pipeline inferensi
+
+## Progress
+- [x] Baseline model (ResNet-18) – Test Acc 70%
+- [x] Improved model with augmentation, dropout, scheduler
+- [x] EfficientNet-B0 comparison
+- [x] Confusion matrix & classification report
+- [x] Simple inference script
+- [ ] Full pipeline (detect + classify)
+
 
 Progress Project:
     Progress-01 = Inisialisasi repository pada github
     Progress-02 = menginstall pytorch, menginstal cascade detector, menambah sample wajah Katagiri yuuichi dan Vladilena Milize.
-    //masih di progress menambah foto untuk tiap character(2)
+    Progress-03 = Baseline classifier training, ResNet-18 fine-tuning, dan inisialisasi results

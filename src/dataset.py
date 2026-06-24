@@ -4,10 +4,14 @@ from torch.utils.data import Dataset
 import torchvision.transforms as transforms
 
 train_transform = transforms.Compose([
-    transforms.Resize((128, 128)),
+    transforms.Resize((224, 224)),
     transforms.RandomHorizontalFlip(),
+    transforms.RandomRotation(15),
+    transforms.RandomAffine(0, translate=(0.1,0.1)),
+    transforms.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.3, hue=0.1),
     transforms.ToTensor(),
-    transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+    transforms.RandomErasing(p=0.5, scale=(0.02, 0.1)),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
 ])
 
 val_test_transform = transforms.Compose([

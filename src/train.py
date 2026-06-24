@@ -32,8 +32,9 @@ if __name__ == '__main__':
     model = get_model(num_classes).to(DEVICE)
 
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=LR)
-
+    optimizer = optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-4)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=3)
+    
     # 2. Training Loop
     train_losses, val_losses = [], []
     train_accs, val_accs = [], []
@@ -90,10 +91,11 @@ if __name__ == '__main__':
 
         print(f"Train Loss: {epoch_train_loss:.4f}, Acc: {epoch_train_acc:.2f}% | Val Loss: {epoch_val_loss:.4f}, Acc: {epoch_val_acc:.2f}%")
 
+        scheduler.step(epoch_val_acc)
+
         # 4. Simpan Model Terbaik
         if epoch_val_acc > best_val_acc:
             best_val_acc = epoch_val_acc
-            # Memastikan folder models ada
             os.makedirs(os.path.dirname(MODEL_SAVE_PATH), exist_ok=True)
             torch.save(model.state_dict(), MODEL_SAVE_PATH)
             print("Model saved.")
@@ -101,7 +103,7 @@ if __name__ == '__main__':
     print(f"Best Val Acc: {best_val_acc:.2f}%")
 
     # 5. Visualisasi Grafik
-    os.makedirs('outputs', exist_ok=True) # Memastikan folder outputs ada
+    os.makedirs('outputs', exist_ok=True)
     plt.figure(figsize=(12,4))
     
     plt.subplot(1,2,1)
