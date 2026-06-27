@@ -19,4 +19,10 @@ pipeline = AnimeFacePipeline(
     confidence_thresh=args.threshold
 )
 
+if args.detector == 'mtcnn':
+    detector = AnimeMTCNNDetector(model_path='models/animeface_mtcnn.pth')
+else:
+    detector = AnimeFaceDetector('src/lbpcascade_animeface.xml')
+pipeline = AnimeFacePipeline(detector=detector)
+
 pipeline.process_image(args.input, args.output)

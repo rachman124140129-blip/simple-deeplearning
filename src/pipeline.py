@@ -10,6 +10,9 @@ from face_detector import AnimeFaceDetector
 from model import get_model
 
 class AnimeFacePipeline:
+    def __init__(self, detector, model, class_to_idx, device='cpu', confidence_thresh=0.5):
+        self.detector = detector
+        
     def __init__(self, cascade_path, model_path, class_to_idx, model_type='resnet18', device='cpu', confidence_thresh=0.5):
         self.detector = AnimeFaceDetector(cascade_path)
         self.device = torch.device(device)
