@@ -76,17 +76,17 @@ class AnimeFacePipeline:
             print(f"Hasil disimpan di {output_path}")
         return img
     
-    def process_array(self, img_bgr, output_path=None):
+    def process_array(self, img_bgr):
         img = img_bgr.copy()
+        results = []
         faces = self.detector.detect_from_image(img)
-        for (x, y, w, h) in faces:
+        for (x,y,w,h) in faces:
             crop = img[y:y+h, x:x+w]
             if crop.size == 0: continue
             label, conf = self.predict_face(crop)
-            color = (0, 255, 0) if label != "Unknown" else (0, 0, 255)
-            cv2.rectangle(img, (x, y), (x+w, y+h), color, 2)
+            results.append({'bbox': [x,y,w,h], 'label': label, 'confidence': conf})
+            color = (0,255,0) if label != "Unknown" else (0,0,255)
+            cv2.rectangle(img, (x,y), (x+w,y+h), color, 2)
             text = f"{label} ({conf:.2f})" if label != "Unknown" else "Unknown"
             cv2.putText(img, text, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-        if output_path:
-            cv2.imwrite(output_path, img)
-        return img
+        return img, results
